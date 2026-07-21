@@ -10,9 +10,10 @@ import {
 } from 'lucide-react';
 import { Navigate, useNavigate, useParams } from 'react-router';
 
-import { Button } from '@/components';
+import { Button, InsightChat } from '@/components';
 import { MetricCard } from '@/components/MetricCard';
 import { useInsight } from '@/hooks/useInsight';
+import { useSimulationChat } from '@/hooks/useSimulationChat';
 import { useSimulationHistory } from '@/hooks/useSimulationHistory';
 import { calculateInsight } from '@/lib/calculateInsight';
 import { formatBRL } from '@/lib/formatCurrency';
@@ -25,6 +26,11 @@ export default function Results() {
 
   const simulation = id ? getSimulationById(id) : undefined;
   const { insight, isLoading, error, fetchInsight } = useInsight(id ?? '');
+  const {
+    messages,
+    sendMessage,
+    isLoading: isChatLoading,
+  } = useSimulationChat(simulation, insight);
 
   if (!simulation) {
     return <Navigate to="/historico" replace />;
@@ -74,7 +80,7 @@ export default function Results() {
       {/* Linha 2 - card de IA (grande) + 3 cards verticais */}
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
         {/* Card 4 - Insights da IA */}
-        <div className="border-border bg-card flex flex-col rounded-lg border p-6 shadow-md lg:col-span-2 dark:shadow-black/30">
+        <div className="border-border bg-card flex max-h-[600px] flex-col rounded-lg border p-6 shadow-md lg:col-span-2 dark:shadow-black/30">
           <div className="flex items-center gap-2">
             <span className="bg-primary/10 text-primary flex size-9 items-center justify-center rounded-lg">
               <Sparkles className="size-5" />
@@ -82,9 +88,10 @@ export default function Results() {
             <h2 className="text-card-foreground text-lg font-semibold">Insights da IA</h2>
           </div>
 
-          <div className="mt-4 flex-1">
+          {/* Área com scroll: diagnóstico + chat */}
+          <div className="mt-4 flex-1 space-y-4 overflow-y-auto pr-1 text-sm leading-relaxed">
             {isLoading && (
-              <div className="flex h-full flex-col items-center justify-center gap-3 py-8 text-center">
+              <div className="flex flex-col items-center justify-center gap-3 py-8 text-center">
                 <Loader2 className="text-primary size-6 animate-spin" />
                 <p className="text-muted-foreground text-sm">
                   Gerando seu diagnóstico personalizado...
@@ -93,7 +100,7 @@ export default function Results() {
             )}
 
             {error && !isLoading && (
-              <div className="flex h-full flex-col items-center justify-center gap-3 py-8 text-center">
+              <div className="flex flex-col items-center justify-center gap-3 py-8 text-center">
                 <AlertCircle className="text-destructive size-6" />
                 <p className="text-muted-foreground text-sm">{error}</p>
                 <Button variant="outline" size="sm" onClick={() => fetchInsight(id ?? '')}>
@@ -103,7 +110,7 @@ export default function Results() {
             )}
 
             {insight && !isLoading && !error && (
-              <div className="space-y-4 text-sm leading-relaxed">
+              <div className="space-y-4">
                 <p className="text-card-foreground">{insight.feasibility.content}</p>
 
                 <div>
@@ -147,9 +154,31 @@ export default function Results() {
                 <p className="border-border text-primary border-t pt-3 font-medium">
                   {insight.motivation.content}
                 </p>
+
+                {/* Mensagens do chat aparecem aqui, dentro da mesma área com scroll */}
+                {messages.map((message) => (
+                  <div
+                    key={message.id}
+                    className={cn(
+                      'max-w-[85%] rounded-lg px-3 py-2 text-sm leading-relaxed',
+                      message.role === 'user'
+                        ? 'bg-primary text-primary-foreground ml-auto'
+                        : 'bg-muted text-foreground',
+                    )}
+                  >
+                    {message.content}
+                  </div>
+                ))}
               </div>
             )}
           </div>
+
+          {/* Campo de pergunta fixo, fora da área com scroll */}
+          {insight && !isLoading && !error && (
+            <div className="border-border border-t pt-4">
+              <InsightChat messages={[]} isLoading={isChatLoading} onSend={sendMessage} />
+            </div>
+          )}
         </div>
 
         {/* Cards 5, 6 e 7 */}
