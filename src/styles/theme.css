@@ -1,0 +1,136 @@
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: 'Inter', sans-serif;
+
+  --color-cotton-rose-50: #faeaea;
+  --color-cotton-rose-100: #f6d6d5;
+  --color-cotton-rose-200: #ecadac;
+  --color-cotton-rose-300: #e38482;
+  --color-cotton-rose-400: #d95b59;
+  --color-cotton-rose-500: #d0322f;
+  --color-cotton-rose-600: #a62826;
+  --color-cotton-rose-700: #7d1e1c;
+  --color-cotton-rose-800: #531413;
+  --color-cotton-rose-900: #2a0a09;
+  --color-cotton-rose-950: #1d0707;
+
+  --color-petal-pink-50: #f7eef6;
+  --color-petal-pink-100: #efdced;
+  --color-petal-pink-200: #dfb9da;
+  --color-petal-pink-300: #cf96c8;
+  --color-petal-pink-400: #bf73b6;
+  --color-petal-pink-500: #af50a4;
+  --color-petal-pink-600: #8c4083;
+  --color-petal-pink-700: #693062;
+  --color-petal-pink-800: #462041;
+  --color-petal-pink-900: #231021;
+  --color-petal-pink-950: #180b17;
+
+  --color-purple-x11-50: #f6eafb;
+  --color-purple-x11-100: #ecd4f7;
+  --color-purple-x11-200: #daaaee;
+  --color-purple-x11-300: #c77fe6;
+  --color-purple-x11-400: #b455dd;
+  --color-purple-x11-500: #a22ad5;
+  --color-purple-x11-600: #8122aa;
+  --color-purple-x11-700: #611980;
+  --color-purple-x11-800: #411155;
+  --color-purple-x11-900: #20082b;
+  --color-purple-x11-950: #17061e;
+
+  --color-indigo-velvet-50: #f3ebf9;
+  --color-indigo-velvet-100: #e7d7f4;
+  --color-indigo-velvet-200: #d0b0e8;
+  --color-indigo-velvet-300: #b888dd;
+  --color-indigo-velvet-400: #a061d1;
+  --color-indigo-velvet-500: #8939c6;
+  --color-indigo-velvet-600: #6d2e9e;
+  --color-indigo-velvet-700: #522277;
+  --color-indigo-velvet-800: #37174f;
+  --color-indigo-velvet-900: #1b0b28;
+  --color-indigo-velvet-950: #13081c;
+
+  --color-shadow-grey-50: #f4f1f3;
+  --color-shadow-grey-100: #e9e2e7;
+  --color-shadow-grey-200: #d3c5cf;
+  --color-shadow-grey-300: #bca9b7;
+  --color-shadow-grey-400: #a68c9f;
+  --color-shadow-grey-500: #906f87;
+  --color-shadow-grey-600: #73596c;
+  --color-shadow-grey-700: #564351;
+  --color-shadow-grey-800: #3a2c36;
+  --color-shadow-grey-900: #1d161b;
+  --color-shadow-grey-950: #141013;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+}
+
+:root {
+  --background: var(--color-shadow-grey-50);
+  --foreground: var(--color-shadow-grey-900);
+
+  --card: #ffffff;
+  --card-foreground: var(--color-shadow-grey-900);
+
+  --primary: var(--color-cotton-rose-500);
+  --primary-foreground: #ffffff;
+
+  --secondary: var(--color-petal-pink-100);
+  --secondary-foreground: var(--color-petal-pink-800);
+
+  --accent: var(--color-purple-x11-500);
+  --accent-foreground: #ffffff;
+
+  --muted: var(--color-shadow-grey-100);
+  --muted-foreground: var(--color-shadow-grey-600);
+
+  --border: var(--color-shadow-grey-200);
+
+  --destructive: var(--color-cotton-rose-600);
+  --destructive-foreground: #ffffff;
+}
+
+.dark {
+  --background: var(--color-shadow-grey-950);
+  --foreground: var(--color-shadow-grey-50);
+
+  --card: var(--color-shadow-grey-900);
+  --card-foreground: var(--color-shadow-grey-50);
+
+  --primary: var(--color-cotton-rose-400);
+  --primary-foreground: var(--color-cotton-rose-950);
+
+  --secondary: var(--color-indigo-velvet-800);
+  --secondary-foreground: var(--color-indigo-velvet-100);
+
+  --accent: var(--color-purple-x11-400);
+  --accent-foreground: var(--color-purple-x11-950);
+
+  --muted: var(--color-shadow-grey-800);
+  --muted-foreground: var(--color-shadow-grey-300);
+
+  --border: var(--color-shadow-grey-700);
+
+  --destructive: var(--color-cotton-rose-400);
+  --destructive-foreground: var(--color-cotton-rose-950);
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+}
